@@ -6,7 +6,10 @@ const map = new mapboxgl.Map(
         container: 'map', // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
         center: [10.75, 59.91], // starting position [lng, lat]
-        zoom: 14 // starting zoom
+        zoom: 14, // starting zoom
+        pitch: 60, // 3d
+        bearing: 40, // 3d
+        antialias: true
     }
 );
 
