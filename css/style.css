@@ -1,0 +1,18 @@
+body {
+    background-color: #ddd;
+}
+
+#map {
+    width: 100vw;
+    height: 100vh;
+    background-color: #cfc;
+}
+
+.error {
+    background-color: crimson;
+    color: #fff;
+}
+
+.hide-error {
+    display: none;
+}
