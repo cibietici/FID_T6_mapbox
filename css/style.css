@@ -16,3 +16,15 @@ body {
 .hide-error {
     display: none;
 }
+
+.marker {
+    display: block;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-image: url(../assets/bike.svg);
+    background-size: 100%;
+}
