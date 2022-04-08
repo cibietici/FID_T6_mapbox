@@ -8,11 +8,11 @@ async function getMap(){
         return {
             type: 'Feature',
             properties: {
-                message: station.title + ' ' +  station.subtitle
+                message: station.name
                 },
             geometry: {
                 type: 'Point',
-                coordinates: [station.center.longitude, station.center.latitude]
+                coordinates: [station.lon, station.lat]
                 }
             }
     });
@@ -50,11 +50,10 @@ async function getMap(){
 
 async function getStations() {
     //const url = 'https://data-legacy.urbansharing.com/legacy-api/stations.json';
-    const corsUrl = `https://api.allorigins.win/get?url=${encodeURIComponent('https://data-legacy.urbansharing.com/legacy-api/stations.json')}`;
-    const response = await fetch(corsUrl);
-    const result = await response.json();
-    const stations = JSON.parse(result.contents);
-    return stations.stations;
+    const urlStations = 'https://gbfs.urbansharing.com/oslobysykkel.no/station_information.json';
+    const response = await fetch(urlStations);
+    const stations = await response.json();
+    return stations.data.stations;
 };
 
 getMap();
