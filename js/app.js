@@ -75,6 +75,7 @@ function showPopUp(station, status, map, center) {
     const popUpEl = document.querySelector('.pop-up');
     const stationTitle = document.querySelector('.pop-up h2');
     const bikes = document.querySelector('.pop-up p');
+    const closeEl = document.querySelector('.close-pop');
     stationTitle.textContent = station;
     bikes.textContent = `${status.num_bikes_available} / ${status.num_docks_available}`
     popUpEl.classList.remove('hidden');
@@ -82,6 +83,14 @@ function showPopUp(station, status, map, center) {
         center: center,
         zoom: 20,
         essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    });
+    closeEl.addEventListener('click', () => {
+        popUpEl.classList.add('hidden');
+        map.flyTo({
+            center: [10.75, 59.91],
+            zoom: 16,
+            essential: true // this animation is considered essential with respect to prefers-reduced-motion
+        });
     });
 }
 
