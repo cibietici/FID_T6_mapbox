@@ -28,3 +28,29 @@ body {
     background-image: url(../assets/bike.svg);
     background-size: 100%;
 }
+
+.pop-up {
+    position: absolute;
+    z-index: 300;
+    width: 90%;
+    height: 100px;
+    margin: 10px 5%;
+    bottom: 0;
+    background-color: rgb(198, 153, 199);
+    color: #000;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.pop-up h2 {
+    margin: 5px 0;
+    text-align: center;
+}
+.pop-up p {
+    margin: 5px 0;
+    font-size: 20px;
+    text-align: center;
+}

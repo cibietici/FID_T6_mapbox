@@ -3,12 +3,22 @@ const mapbox_key = 'pk.eyJ1IjoiY2liaWV0aWNpIiwiYSI6ImNrenM1Z2gwdjZ6aHUydm16dzBld
 async function getMap(){
 
     mapboxgl.accessToken = mapbox_key;
+
+    const statusStations = await getStatus();
+    const checkStatus = id => {
+        return statusStations.find(station => station.station_id === id)
+    }
+
     const bikeStations = await getStations();
     const featuresBikes = bikeStations.map(station => {
         return {
             type: 'Feature',
             properties: {
-                message: station.name
+                station: station.name,
+                status: checkStatus(station.station_id),
+                lon: station.lon,
+                lat: station.lat,
+                center: [station.lon, station.lat]
                 },
             geometry: {
                 type: 'Point',
@@ -38,7 +48,7 @@ async function getMap(){
         const markerEl = document.createElement('div');
         markerEl.classList.add('marker');
         markerEl.addEventListener('click', () => {
-            alert(station.properties.message);
+            showPopUp(station.properties.station, station.properties.status, map, station.properties.center)
         });
         new mapboxgl.Marker(markerEl)
         .setLngLat(station.geometry.coordinates)
@@ -48,13 +58,33 @@ async function getMap(){
 
 };
 
+function showPopUp(station, status, map, center) {
+    const popUpEl = document.querySelector('.pop-up');
+    const stationTitle = document.querySelector('.pop-up h2');
+    const bikes = document.querySelector('.pop-up p');
+    stationTitle.textContent = station;
+    bikes.textContent = `${status.num_bikes_available} / ${status.num_docks_available}`
+    popUpEl.classList.remove('hidden');
+    map.flyTo({
+        center: center,
+        zoom: 20,
+        essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    });
+}
+
 async function getStations() {
-    //const url = 'https://data-legacy.urbansharing.com/legacy-api/stations.json';
     const urlStations = 'https://gbfs.urbansharing.com/oslobysykkel.no/station_information.json';
     const response = await fetch(urlStations);
     const stations = await response.json();
     return stations.data.stations;
 };
+
+async function getStatus() {
+    const urlStations = 'https://gbfs.urbansharing.com/oslobysykkel.no/station_status.json';
+    const response = await fetch(urlStations);
+    const status = await response.json();
+    return status.data.stations;
+}
 
 getMap();
 
