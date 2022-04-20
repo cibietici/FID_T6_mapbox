@@ -1,3 +1,16 @@
+/* // Registering. Should be in the JS file contained in the html files.
+window.addEventListener('load', () => {
+    navigator.serviceWorker
+    .register('../sw.js')
+    .then(_ => console.log('Registered service worker'))
+    .catch(e => console.log('Error registering: ', e));
+}); */
+
+// Initialize the service worker
+if (navigator && navigator.serviceWorker) {
+    navigator.serviceWorker.register('../sw.js');
+}
+
 const mapbox_key = 'pk.eyJ1IjoiY2liaWV0aWNpIiwiYSI6ImNrenM1Z2gwdjZ6aHUydm16dzBldXJmcjIifQ.ugFvlWIvOLmyqr7v__e_Ug';
 
 async function getMap(){
