@@ -58,3 +58,7 @@ body {
 .close-pop {
     margin: 0 auto 0 0;
 }
+
+.offline {
+    color: red;
+}

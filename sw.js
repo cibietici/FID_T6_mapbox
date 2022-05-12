@@ -1,55 +1,51 @@
-/* let cacheVersion = 1
-let cacheName = "web-workr-cache-"+cacheVersion
-const pageToSave = "./offline.html"
 
-// Installing service worker
-this.addEventListener('install', event => {
-    console.log("Installing service worker");
-    event.waitUntil(caches.open(cacheName)
-    .then((openCache) => {
-        return openCache.add(pageToSave)
-    })
-    .catch(err => console.log(err)))
-});
-
-// Fetching resource
-this.addEventListener('fetch', event => {
-    console.log("Fetching with service worker");
-    if(event.request.mode === 'navigate'){
-        event.respondWith(
-            fetch(event.request.url)
-            .catch(_ => {
-                return caches.match(pageToSave)
-            })
-        )
-    }
-});
- */
-
-// On install, cache some stuff
-addEventListener('install', function (event) {
-	event.waitUntil(caches.open('core').then(function (cache) {
-		cache.add(new Request('./offline.html'));
-		return;
-	}));
-});
-
-// listen for requests
-addEventListener('fetch', function (event) {
-
-	// Get the request
-	var request = event.request;
-
-	// HTML files
-	// Network-first
-	if (request.headers.get('Accept').includes('text/html')) {
-		event.respondWith(
-			fetch(request).then(function (response) {
-				return response;
-			}).catch(function (error) {
-				return caches.match('offline.html');
+const cache_NAME = 'v1OsloBS';
+const cache_ASSETS = [
+	'./index.html',
+	'./css/style.css',
+	'./js/app.js',
+	'./manifest.json'
+]
+// install event
+self.addEventListener('install', (e) => {
+	console.log('service worker installed');
+	e.waitUntil(
+		caches
+			.open(cache_NAME)
+			.then(cache => {
+				console.log('SW is caching');
+				cache.addAll(cache_ASSETS);
 			})
-		);
-	}
+			.then(() => self.skipWaiting())
+			.catch(err => console.log(err))
+	);
+});
 
+// activate event
+// vi kan gjøre ting her som for eksempel slette gammel cache
+/* self.addEventListener('activate', (e) => {
+	console.log('service worker activate');
+	// ta borte cache
+	e.waitUntil(
+		caches.keys().then(cache_NAME => {
+			return Promise.all(
+				cache_NAME.map(cache => {
+					if(cache !== cache_NAME) {
+						return caches.delete(cache);
+					}
+				})
+			)
+		})
+	);
+}); */
+
+// ta ut cache filer fra cache om det ikke er nett 
+self.addEventListener('fetch', (e) => {
+	e.respondWith(
+		// neste linje med feiler om det ikke er nett
+		// vi fanger det med catch
+		fetch(e.request).catch(() =>{
+			return caches.match(e.request)
+		})
+	)
 });
