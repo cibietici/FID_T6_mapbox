@@ -1,4 +1,6 @@
 
+//Alternativ metode for å cache er dette 
+//Vi lagre filer underveis mens vi bla gjennom
 const cache_NAME = 'v1_OsloBS_site_all';
 
 // install event

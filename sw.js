@@ -1,5 +1,7 @@
 
+// vi definere her navn av cache mappa 
 const cache_NAME = 'v1OsloBS';
+// vi definere her lista av filer vi kommer til å lagre
 const cache_ASSETS = [
 	'./index.html',
 	'./css/style.css',

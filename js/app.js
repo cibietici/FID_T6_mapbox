@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
     navigator.serviceWorker.register('../sw.js');
 } */
 
-// SERVICE WORKER WITH errors
+// SERVICE WORKER med errors
 
 const registerServiceWorker = async () => {
     if ('serviceWorker' in navigator) {
